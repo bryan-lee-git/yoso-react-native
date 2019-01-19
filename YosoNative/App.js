@@ -7,43 +7,56 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { Button } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import Home from './pages/Home';
+import Why from './pages/Why';
+import Signin from './pages/Signin';
+import Login from './pages/Login';
+import Lists from './pages/Lists';
+import Account from './pages/Account';
+import Recipes from './pages/Recipes';
+import Pantry from './pages/Pantry';
+import Waste from './pages/Waste';
+import NewList from './pages/NewList';
+import MyLists from './pages/MyLists';
+import EditList from './pages/EditList';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <AppContainer />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+const AppStackNavigator = createStackNavigator({
+  Home: {screen: Home},
+  Why: {screen: Why},
+  Signin: {screen: Signin },
+  Login: {screen: Login},
+  Lists: {screen: Lists},
+  Account: {screen: Account},
+  Pantry: {screen: Pantry},
+  Recipes: {screen: Recipes},
+  Waste: {screen: Waste},
+  NewList: {screen: NewList},
+  MyLists: {screen: MyLists},
+  EditList: {screen: EditList},
+},{
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: 'green'
+    },
+    headerRight: (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Info"
+        color="black"
+      /> 
+    )
+  }
 });
+
+const AppContainer = createAppContainer (AppStackNavigator);
