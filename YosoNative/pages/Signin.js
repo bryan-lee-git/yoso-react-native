@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import { 
+  ScrollView, 
+  View, 
+  StyleSheet,
+} from 'react-native';
+import { 
+  Button,
+  Text,
+  Input,
+} from 'react-native-elements';
 
 class Signin extends Component {
   
@@ -72,76 +81,66 @@ class Signin extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.row}>
-          <View style={styles.col}>
-            <Text style={styles.title}>YOSO SIGN UP</Text>
+      <ScrollView style={styles.container}>
+        <View style={styles.alignContainer}>
+          <View style={styles.row}>
+            <View style={styles.col}>
+              <Text h2>YOSO SIGN UP</Text>
+            </View>
           </View>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
+            <Input
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
               placeholder="First Name"
               textContentType="name"
               spellCheck= {false}
               onChangeText={this.handleFirstChange}
               value={this.state.firstName}
             />
-          </View>
 
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
+            <Input
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
               placeholder="Last Name"
               textContentType="name"
               spellCheck= {false}
               onChangeText={this.handleLastChange}
               value={this.state.lastName}
             />
-          </View>
-        </View>
 
-        <View style={styles.row}>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
+            <Input
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
               placeholder="Street"
               textContentType="streetAddressLine1"
               spellCheck= {false}
               onChangeText={this.handleStreetChange}
               value={this.state.street}
             />
-          </View>
 
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
+            <Input
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
               placeholder="City"
               textContentType="addressCity"
               spellCheck= {false}
               onChangeText={this.handleCityChange}
               value={this.state.city}
             />
-          </View>
-        </View>
 
-        <View style={styles.row}>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
+            <Input
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
               placeholder="State"
               textContentType="streetAddressLine1"
               spellCheck= {false}
               onChangeText={this.handleStateChange}
               value={this.state.homeState}
             />
-          </View>
 
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
+            <Input
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
               placeholder="Zip"
               keyboardType="number-pad"
               textContentType="postalCode"
@@ -149,13 +148,10 @@ class Signin extends Component {
               onChangeText={this.handleZipChange}
               value={this.state.zip}
             />
-          </View>
-        </View>
 
-        <View style={styles.row}>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
+            <Input
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
               placeholder="Email"
               keyboardType="email-address"
               textContentType="emailAddress"
@@ -163,11 +159,10 @@ class Signin extends Component {
               onChangeText={this.handleEmailChange}
               value={this.state.email}
             />
-          </View>
 
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
+            <Input
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
               placeholder="Password"
               secureTextEntry={true}
               textContentType="password"
@@ -175,15 +170,14 @@ class Signin extends Component {
               onChangeText={this.handlePswrdChange}
               value={this.state.password}
             />
-          </View>
-        </View>
-        <Button 
-          color="#33cc33" 
-          title="Sign up" 
-          onPress={this.handleSignUp}
-          key='signUp'
-        />               
-      </View>
+          <Button 
+            buttonStyle={styles.button}
+            title="Sign up" 
+            onPress={this.handleSignUp}
+            key='signUp'
+          />  
+        </View>                 
+      </ScrollView>
     );
   }
 }
@@ -192,33 +186,29 @@ export default Signin;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    backgroundColor: 'green', 
-    alignItems: 'center',
-  },
-  fieldContainer: {
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: 'white',
-    marginRight: 5,
-    marginLeft: 5,
+    backgroundColor: 'green',
     flex: 1,
   },
-  textField: {
-    height: 40,
-    margin: 0,
-    marginRight: 7,
-    paddingLeft: 10,
-  },
-  title: {
-    fontSize: 35,
-    fontWeight: 'bold',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  col: {
-    flexDirection: 'column',
+  alignContainer: {    
     alignItems: 'center',
-  }
+    justifyContent: 'center',
+  },
+  input: {
+    backgroundColor: '#fff',
+    flex: 1,
+    borderRadius: 10,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    margin: 5,
+  },
+  button: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    padding: 5,
+    marginTop: 15,
+    padding:10,
+  }, 
 })

@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
-import ActionButton from 'react-native-action-button';
+import { 
+  ScrollView, 
+  StyleSheet, 
+  View 
+} from 'react-native';
+import { 
+  Button,
+  Text,
+  Input,
+} from 'react-native-elements';
 
 class Login extends Component {
   state = {
@@ -16,9 +24,6 @@ class Login extends Component {
     this.props.navigation.navigate('Home')
   }
 
-  handleMainNav = () => {
-    // this.props.navigation.navigate('Main')
-  }
 
   handleEmailChange = val => {
     this.setState({
@@ -35,16 +40,15 @@ class Login extends Component {
   };
 
   render() {
-    return [
-      <View style={{flex: 1, backgroundColor: 'green'}}>
-        <View style={{alignItems: 'center'}}>
-          <Text style={{fontSize: 35, fontWeight: 'bold'}}>YOSO LOGIN</Text>
-        </View>
-        
-        <View style={styles.fieldContainer}>
-          <TextInput
+    return (
+      <ScrollView style={styles.container}>
+        <View style={styles.alignContainer}>
+          <Text h2>YOSO Log in</Text>
+
+          <Input 
             key="email"
-            style={styles.textField}
+            inputContainerStyle={styles.input}
+            leftIcon={{ type: 'font-awesome', name: 'pencil' }}
             placeholder="Email"
             keyboardType="email-address"
             textContentType="emailAddress"
@@ -52,11 +56,11 @@ class Login extends Component {
             onChangeText={this.handleEmailChange}
             value={this.state.email}
           />
-        </View>
 
-        <View style={styles.fieldContainer}>
-          <TextInput
-            style={styles.textField}
+          <Input 
+            key="password"
+            inputContainerStyle={styles.input}
+            leftIcon={{ type: 'font-awesome', name: 'pencil' }}
             placeholder="Password"
             secureTextEntry={true}
             textContentType="password"
@@ -64,38 +68,48 @@ class Login extends Component {
             onChangeText={this.handlePswrdChange}
             value={this.state.password}
           />
+
+          <Button 
+            buttonStyle={styles.button}
+            title="Login"
+            key='login'
+            onPress={this.handleGoHome}
+          />
         </View>
-        <Button 
-          color="#33cc33" 
-          title="Login" 
-          onPress={this.handleMainNav}
-          key='enterLogin'
-        /> 
-      </View>,
-      <ActionButton 
-        key="fab"
-        onPress={this.handleGoHome}
-        buttonColor='blue'
-        style={{marginBottom: 250}}
-      />
-    ];
+      </ScrollView>
+    );
   }
 }
 
 export default Login;
 
 const styles = StyleSheet.create({
-  fieldContainer: {
-    marginTop: 20,
-    marginBottom: 20,
-    backgroundColor: 'white',
-    marginRight: 10,
-    marginLeft: 10,
+  container: {
+    backgroundColor: 'green',
+    flex: 1,
   },
-  textField: {
-    height: 40,
-    margin: 0,
-    marginRight: 7,
-    paddingLeft: 10,
-  }
-})
+  alignContainer: {    
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    backgroundColor: '#fff',
+    flex: 1,
+    borderRadius: 10,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    margin: 5,
+  },
+  button: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    padding: 5,
+    marginTop: 15,
+    padding:10,
+  }, 
+});
+
+          

@@ -7,7 +7,8 @@
  */
 
 import React, {Component} from 'react';
-import { Button } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Home from './pages/Home';
 import Why from './pages/Why';
@@ -22,6 +23,16 @@ import NewList from './pages/NewList';
 import MyLists from './pages/MyLists';
 import EditList from './pages/EditList';
 
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    marginRight: 25,
+    padding: 5,
+  },
+});
 
 export default class App extends Component {
   render() {
@@ -47,16 +58,17 @@ const AppStackNavigator = createStackNavigator({
 },{
   defaultNavigationOptions: {
     headerStyle: {
-      backgroundColor: 'green'
+      backgroundColor: '#33cc33'
     },
     headerRight: (
       <Button
         onPress={() => alert('This is a button!')}
-        title="Info"
-        color="black"
+        title='Home'
+        buttonStyle={styles.button}
       /> 
     )
   }
 });
 
 const AppContainer = createAppContainer (AppStackNavigator);
+

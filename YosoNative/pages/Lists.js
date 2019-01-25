@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Button, Text, TextInput} from 'react-native';
+import { StyleSheet, View, } from 'react-native';
+import { Button } from 'react-native-elements';
 
 class Lists extends Component {
 
@@ -21,7 +22,7 @@ class Lists extends Component {
         <View style={styles.row}>
           <View style={styles.btnColumn}>
             <Button 
-              color="#33cc33" 
+              buttonStyle={styles.button} 
               title="New Lists" 
               onPress={this.handleNewListNav}
               key='newList'
@@ -29,7 +30,7 @@ class Lists extends Component {
           </View>
           <View style={styles.btnColumn}>
             <Button 
-              color="#33cc33" 
+              buttonStyle={styles.button} 
               title="My List" 
               onPress={this.handleMyListNav}
               key='myList'
@@ -50,14 +51,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fieldContainer: {
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: 'white',
-    marginRight: 5,
-    marginLeft: 5,
-    flex: 1,
-  },
   row: {
     flexDirection: 'row',
   },
@@ -69,12 +62,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     margin: 10,
   },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  teaser: {
-    fontSize: 20,
-  }
+  button: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    padding: 5,
+    marginTop: 25,
+  }, 
 
 });

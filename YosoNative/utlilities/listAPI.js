@@ -1,6 +1,6 @@
 import axios from "axios";
 
-var rootDomain = require("./rootDomain.js").default
+const rootDomain = require("./rootDomain.js").default
 
 export default {
   //Get all User Lists items.
@@ -29,15 +29,6 @@ export default {
       UserId: userId,
       name: data.name
     })
-
-    // return axios({
-    //   method: `post`,
-    //   url: `${rootDomain}/api/list/`,
-    //   data: {
-    //     UserId: userId,
-    //     name: data.name
-    //   }
-    // });
   },
 
   // Create a new User List with items
@@ -56,7 +47,7 @@ export default {
   updateList: function(userId, listId, data) {
     return axios({
       method: `put`,
-      url: `/api/list/${listId}`,
+      url: `${rootDomain}/api/list/${listId}`,
       data: {
         userId: userId,
         data
@@ -67,7 +58,7 @@ export default {
   deleteList: function(userId, listId) {
     return axios({
       method: `delete`,
-      url: `/api/list/${listId}`,
+      url: `${rootDomain}/api/list/${listId}`,
       data: {
         userId: userId
       }
