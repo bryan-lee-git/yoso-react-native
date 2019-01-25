@@ -1,33 +1,47 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Text, View, Button, StyleSheet } from 'react-native';
+import listAPI from '../utlilities/listAPI';
 
-const ListComponent = (props) => {
- 
-  return (
-    <View style={styles.card}>      
-      <View style={styles.counterContainer}>
-        <View style={styles.counter}>
-          <Text style={styles.counterText}>{props.list.name}</Text>
-        </View>
-        
-        <View style={styles.counter}>
-          <Button
-            color="#33cc33"
-            title="Edit"
-            onPress={props.handleEditListNav}
-            key='editList'
-          />
-          <View style={{margin: 10}} />
-          <Button
-            color="#33cc33"
-            title="Delete"
-            onPress={this.handleDeleteList}
-            key='deleteList'
-          />          
+
+class ListComponent extends Component {
+
+  test = () => {
+    console.log(this.props);
+  }
+
+  render(){
+    return (
+      <View style={styles.card}>      
+        <View style={styles.counterContainer}>
+          <View style={styles.counter}>
+            <Text style={styles.counterText}>{this.props.list.name}</Text>
+          </View>
+          
+          <View style={styles.counter}>
+            <Button
+              color="#33cc33"
+              title="Edit"
+              onPress={this.props.handleEditListNav}
+              key='editList'
+            />
+            <View style={{margin: 10}} />
+            <Button
+              color="#33cc33"
+              title="Delete"
+              onPress={e =>
+                  this.props.handleDeleteList(
+                  e,
+                  this.props.list.UserId,
+                  this.props.list.id,
+                )
+              }
+              key='deleteList'
+            />          
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 export default ListComponent;

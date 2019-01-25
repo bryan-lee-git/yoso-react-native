@@ -1,27 +1,19 @@
 import React, { Component } from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
-import Signin from '../pages/Signin';
+import { View, StyleSheet, } from 'react-native';
+import { Button } from 'react-native-elements';
+import LandingHeader from '../components/LandingHeader.js';
+ 
 
 const UserAuth = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        <View style={styles.column}>
-          <Text style={styles.title}>YOSO</Text>
-        </View>
-      </View>  
-    
-      <View style={styles.row}>
-        <View style={styles.column}>
-          <Text style={styles.teaser}>Welcome to YOSO Native App Alpha v3</Text>
-        </View>
-      </View> 
-              
+      <LandingHeader />
+      
       <View style={styles.row}>
         <View style={styles.btnColumn}>
           <Button 
-            color="#33cc33" 
+            buttonStyle={styles.button} 
             title="YOSO?" 
             onPress={props.handleWhyNav}
             key='yoso'
@@ -29,7 +21,7 @@ const UserAuth = (props) => {
         </View>
         <View style={styles.btnColumn}>
           <Button 
-            color="#33cc33" 
+            buttonStyle={styles.button} 
             title="Sign Up" 
             onPress={props.handleSigninNav}
             key='signup'
@@ -37,7 +29,7 @@ const UserAuth = (props) => {
           </View>
         <View style={styles.btnColumn}>
           <Button
-            color="#33cc33" 
+            buttonStyle={styles.button} 
             title="Login" 
             onPress={props.handleLoginNav}
             key='login'
@@ -53,7 +45,7 @@ export default UserAuth;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -68,12 +60,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     margin: 10,
   },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
+  button: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    padding: 5,
+    marginTop: 25,
   },
-  teaser: {
-    fontSize: 20,
-  }
-
 });

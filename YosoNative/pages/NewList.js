@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
+import {
+  Button, 
+  ListItem,
+  Text,
+  Input,
+} from 'react-native-elements';
 import listAPI from '../utlilities/listAPI';
 
 class NewList extends Component {
@@ -36,32 +47,26 @@ class NewList extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.row}>
-          <View style={styles.col}>
-            <Text style={styles.title}>NEW LIST</Text>
-          </View>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.textField}
-              placeholder="New List"
-              textContentType="name"
-              spellCheck= {false}
-              onChangeText={this.handleNewList}
-              value={this.state.firstName}
-            />
-          </View>
-        </View>
+    <ScrollView style={styles.container}>
+      <View style={styles.alignContainer}>
+        <Text h2>New List</Text>
+        <Input 
+          placeholder='New List' 
+          inputContainerStyle={styles.input}
+          leftIcon={{ type: 'font-awesome', name: 'pencil' }}
+          onChangeText={this.handleNewList}
+          value={this.state.newListName}
+        />
         <Button 
-          color="#33cc33" 
-          title="Create New List" 
-          onPress={this.handleNewListSubmit}
-          key='submitNewList'
-        />        
-     </View>
+          title='Create'
+          onPress={e => 
+            this.handleNewListSubmit(
+              e,
+            )}
+          buttonStyle={styles.button}
+        />
+      </View>
+    </ScrollView>
     );
   }
 }
@@ -70,33 +75,27 @@ export default NewList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    backgroundColor: 'green', 
-    alignItems: 'center',
+    backgroundColor: 'green'
   },
-  fieldContainer: {
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: 'white',
-    marginRight: 5,
-    marginLeft: 5,
+  alignContainer: {    
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    backgroundColor: '#fff',
     flex: 1,
+    borderRadius: 10,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    marginTop: 15,
+    marginBottom: 15,
   },
-  textField: {
-    height: 40,
-    margin: 0,
-    marginRight: 7,
-    paddingLeft: 10,
-  },
-  title: {
-    fontSize: 35,
-    fontWeight: 'bold',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  col: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  }
+  button: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    padding: 5,
+  }, 
 })
