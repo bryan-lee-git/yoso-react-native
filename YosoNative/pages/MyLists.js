@@ -3,15 +3,14 @@ import {
   StyleSheet, 
   View, 
   ScrollView,
-  Button, 
-  FlatList, 
-  TextInput,
 } from 'react-native';
-import { 
+import {
+  Button, 
   ListItem,
   Text,
   Input,
 } from 'react-native-elements';
+import Modal from "react-native-modal";
 import listAPI from '../utlilities/listAPI';
 import itemAPI from '../utlilities/ItemAPI';
 
@@ -24,8 +23,8 @@ class MyLists extends Component {
     this.state = {
       userLists: [],
       itemList: [],
-      listName: '',
       displayAllLists: true,
+      isModalVisible: false,
     }
 
     this.getLists = this.getLists.bind(this)
@@ -35,12 +34,54 @@ class MyLists extends Component {
     title: 'My Lists'
   }
 
+   handleNewListNav = () => {
+    this.props.navigation.navigate('NewList')
+  };
+
   componentDidMount = () => {
     this.getLists();
-  }
+  };
+
+  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
+
+  handlebackToMyList = () => {
+    this.setState({
+      displayAllLists: true,
+    });
+  };
+
+  handleItemName = val => {
+    this.setState({
+      itemName: val
+    });
+  };
+
+  handleUnitSize = val => {
+    this.setState({
+      unitSize: val
+    });
+  };
+
+  handleMeasurement = val => {
+    this.setState({
+      measurement: val
+    });
+  };
+
+  handleQuanity = val => {
+    this.setState({
+      quantity: val
+    });
+  };
+
+  handleNotes = val => {
+    this.setState({
+      notes: val
+    });
+  };
 
   getLists = id => {
-    listAPI.getLists(2).then(res => { //change 2 back to id once context is setup
+    listAPI.getLists(1).then(res => { //change 2 back to id once context is setup
       this.setState({
         userLists: res.data,
         // id: this.props.user.id,
@@ -58,33 +99,41 @@ class MyLists extends Component {
     }).catch(err => {
       console.log(err);
     })
+    this._toggleModal();
   };
 
-  handleEditListNav = () => {
-    this.setState({
-      displayAllLists: false,
+  getItems = id => {
+    itemAPI.getItems(id).then(res => {
+      this.setState({ itemList: res.data });
+    }).catch(err => {
+      console.log(err);
     });
   };
-
-  handlebackToMyList = () => {
-    this.setState({
-      displayAllLists: true,
-    });
-  };
-
-  handleNewListNav = () => {
-    this.props.navigation.navigate('NewList')
-  }
 
   handlePopulateItems = (e, id, name) => {
     e.preventDefault();
     this.setState({
       displayAllLists: false,
       listName: name,
+      listID: id,
     });
-    itemAPI.getItems(id).then(res => {
-      //console.log(`From getlists at userLists, here's the user's items: `, res);
-      this.setState({ itemList: res.data });
+    this.getItems(id);
+  };
+
+  handleNewItem = e => {
+    e.preventDefault();
+    const newItem = {
+      name: this.state.itemName,
+      unitSize: this.state.unitSize,
+      measurement: this.state.measurement,
+      quantity: this.state.quantity,
+      notes: this.state.notes,
+      listId: this.state.listID,
+    };
+    itemAPI.createItem(newItem).then(res => {
+      this.getItems(this.state.listID);
+    }).catch(err => {
+      console.log(err);
     });
   };
 
@@ -98,7 +147,7 @@ class MyLists extends Component {
                 containerStyle={styles.listItem}
                 key={i}
                 title={item.name}
-                onPress={this.handleDeleteList}
+                onLongPress={ this._toggleModal }
                 leftIcon={{ name: 'list', type: 'font-awesome' }}
                 chevron={true}
                 onPress={e => 
@@ -110,6 +159,24 @@ class MyLists extends Component {
               />
             ))
           }
+          <Modal 
+            isVisible={this.state.isModalVisible}
+            backdropColor='grey'
+            backdropOpacity={.40}
+          >
+            <View style={styles.modalContainer}>
+              <Button
+                title='Delete List?'
+                onPress={this._toggleModal}
+                buttonStyle={styles.modalButton}
+              />
+              <Button 
+                title='Hide Modal'
+                onPress={this._toggleModal}
+                buttonStyle={styles.modalButton}
+              />
+            </View>
+          </Modal>
         </ScrollView>
       ) : (
         <ScrollView style={styles.container}>
@@ -119,18 +186,64 @@ class MyLists extends Component {
               placeholder='Add Item' 
               inputContainerStyle={styles.input}
               leftIcon={{ type: 'font-awesome', name: 'pencil' }}
+              onChangeText={this.handleItemName}
+              value={this.state.itemName}
             />
             <Input 
               placeholder='Quantity' 
               inputContainerStyle={styles.input}
               leftIcon={{ type: 'font-awesome', name: 'pencil' }}
+              onChangeText={this.handleQuanity}
+              value={this.state.quantity}
             />
             <Input 
               placeholder='Unit Size' 
               inputContainerStyle={styles.input}
               leftIcon={{ type: 'font-awesome', name: 'pencil' }}
+              onChangeText={this.handleUnitSize}
+              value={this.state.unitSize}
+            />
+             <Input 
+              placeholder='Unit Type (measurement)' 
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
+              onChangeText={this.handleMeasurement}
+              value={this.state.measurement}
+            />
+             <Input 
+              placeholder='Note' 
+              inputContainerStyle={styles.input}
+              leftIcon={{ type: 'font-awesome', name: 'pencil' }}
+              onChangeText={this.handleNotes}
+              value={this.state.notes}
+            />
+            <Button 
+              title='Create'
+              onPress={e => 
+                this.handleNewItem(
+                  e,
+                )}
+              buttonStyle={styles.button}
             />
           </View>
+          {
+            this.state.itemList.map((item, i) => (
+              <ListItem
+                containerStyle={styles.listItem}
+                key={i}
+                title={`${item.quantity} ${item.measurement} of ${item.name}`}
+                onPress={this.handleDeleteList}
+                leftIcon={{ name: 'food-apple', type: 'material-community' }}
+                chevron={true}
+                onPress={e => 
+                  this.handlePopulateItems(
+                    e,
+                    item.id,
+                    item.name,
+                  )}
+              />
+            ))
+          }
         </ScrollView>
       )
     );
@@ -144,6 +257,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'green'
   },
   alignContainer: {    
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContainer: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -175,4 +293,19 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     margin: 5,
   },
+  button: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    padding: 5,
+  },
+  modalButton: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    padding: 5,
+    margin: 15,
+  },  
 });

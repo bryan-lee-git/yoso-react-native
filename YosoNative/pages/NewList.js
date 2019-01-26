@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {
   View,
-  TextInput,
   StyleSheet,
   ScrollView,
 } from 'react-native';
 import {
-  Button, 
-  ListItem,
+  Button,
   Text,
   Input,
 } from 'react-native-elements';
@@ -42,7 +40,7 @@ class NewList extends Component {
 
 
   handleNewListSubmit = (e) => {
-    this.createList(e, 2)
+    this.createList(e, 1)
   };
 
   render() {

@@ -19,20 +19,22 @@ export default {
       }
     });
   },
-  // Create a new item for a list.
-  createItem: function(data) {
-    return axios({
-      method: `post`,
-      url: `${rootDomain}/api/listitem`,
-      data: {
-        name: data.name,
-        unitSize: data.unitSize,
-        quantity: data.quantity,
-        ListId: data.ListId,
-        PantryId: data.PantryId
-      }
-    });
-  },
+
+ // Create a new item for a list.
+ createItem: function(data) {
+  return axios({
+    method: `post`,
+    url: `${rootDomain}/api/listitem`,
+    data: {
+      name: data.name,
+      unitSize: data.unitSize,
+      measurement: data.measurement,
+      quantity: data.quantity,
+      notes: data.notes,
+      ListId: data.listId
+    }
+  });
+},
   // Edit a specific item on a list.
   updateItem: function(listId, id, data) {
     return axios({
