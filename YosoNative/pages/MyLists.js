@@ -23,6 +23,7 @@ class MyLists extends Component {
     this.state = {
       userLists: [],
       itemList: [],
+      userId: 1,
       displayAllLists: true,
       isModalVisible: false,
     }
@@ -42,7 +43,13 @@ class MyLists extends Component {
     this.getLists();
   };
 
-  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
+  _toggleModal = (e, listId) => {
+    e.preventDefault();
+    this.setState({ 
+      isModalVisible: !this.state.isModalVisible,
+      listId: listId
+    });
+  }  
 
   handlebackToMyList = () => {
     this.setState({
@@ -92,14 +99,15 @@ class MyLists extends Component {
     })
   };
 
-  handleDeleteList = ( e, userId, listId, ) => {
-    e.preventDefault();
-    listAPI.deleteList(userId, listId).then((res) => {
-      this.getLists(userId)
+  handleDeleteList = () => {
+    listAPI.deleteList(this.state.userId, this.state.listId).then((res) => {
+      this.getLists(this.state.userId)
     }).catch(err => {
       console.log(err);
     })
-    this._toggleModal();
+    // this.setState({ 
+    //   isModalVisible: !this.state.isModalVisible
+    // });
   };
 
   getItems = id => {
@@ -115,7 +123,7 @@ class MyLists extends Component {
     this.setState({
       displayAllLists: false,
       listName: name,
-      listID: id,
+      listId: id,
     });
     this.getItems(id);
   };
@@ -128,10 +136,10 @@ class MyLists extends Component {
       measurement: this.state.measurement,
       quantity: this.state.quantity,
       notes: this.state.notes,
-      listId: this.state.listID,
+      listId: this.state.listId,
     };
     itemAPI.createItem(newItem).then(res => {
-      this.getItems(this.state.listID);
+      this.getItems(this.state.listId);
     }).catch(err => {
       console.log(err);
     });
@@ -147,7 +155,11 @@ class MyLists extends Component {
                 containerStyle={styles.listItem}
                 key={i}
                 title={item.name}
-                onLongPress={ this._toggleModal }
+                onLongPress={e => 
+                  this._toggleModal(
+                    e,
+                    item.id
+                  )}
                 leftIcon={{ name: 'list', type: 'font-awesome' }}
                 chevron={true}
                 onPress={e => 
@@ -167,7 +179,8 @@ class MyLists extends Component {
             <View style={styles.modalContainer}>
               <Button
                 title='Delete List?'
-                onPress={this._toggleModal}
+                onPress={this.handleDeleteList}
+                // onPress={this._toggleModal}
                 buttonStyle={styles.modalButton}
               />
               <Button 
